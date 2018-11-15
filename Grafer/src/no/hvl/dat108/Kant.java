@@ -15,6 +15,10 @@ public class Kant {
 		this.n2 = n2;
 		this.vekt = vekt;
 	}
+	
+	public boolean contains (Node node) {
+		return this.n1 == node || this.n2 == node;
+	}
 
 	public Node getN1() {
 		return n1;

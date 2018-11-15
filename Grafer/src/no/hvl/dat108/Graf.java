@@ -1,7 +1,7 @@
 package no.hvl.dat108;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -130,25 +130,33 @@ public class Graf {
 	 * prim(node) 
 	 * Haug haug 
 	 * haug.leggTil(alle kanter ut fra node) 
-	 * 		så lenge haug.ikkeTom() 
-	 * 			Kant k = haug.taUtMinste() 
-	 * 			hvis ikke begge nodene til k er i MST 
-	 * 				Node n = noden til k som ikke er i MST 
-	 * 				MST.leggTil(n) 
-	 * 				haug.leggTil(alle kanter mellom n og noder som ikke er med i MST)
+	 * så lenge haug.ikkeTom() 
+	 * 		Kant k = haug.taUtMinste() 
+	 * 		hvis ikke begge nodene til k er i MST 
+	 * 			Node n = noden til k som ikke er i MST 
+	 * 			MST.leggTil(n) 
+	 * 			haug.leggTil(alle kanter mellom n og noder som ikke er med i MST)
 	 */
-	public LinkedList<Kant> prim(Node n) {
-		PriorityQueue<Kant> nodeHaug = new PriorityQueue<>();
-		LinkedList<Kant> no = 
+	public LinkedList<Node> prim(Node n) {
+		PriorityQueue<Kant> haug = new PriorityQueue<>(); //Oppretter en Haug med kanter
+		LinkedList<Node> mst = new LinkedList<>(); //Oppretter en mst med noder
+		ArrayList<Kant> k = n.getKanter(); //en liste med kantene til node n
 		int index = noder.indexOf(n);
-		Kant k = n.getKanter().get(index);
-		nodeHaug.add(k);
-		while (!nodeHaug.isEmpty()) {
-			k = nodeHaug.poll();
-			
-		}
+		haug.addAll(n.getKanter());//Legger til alle kantene fra node n.
 		
-		return noder;
+		while (!haug.isEmpty()) { //Så lenge haug ikke er tom:
+			mst.add(haug.poll().getN1()); //tar ut minste kanten i haugen og legger til dens node fra i mst listen.
+			
+			if (!mst.contains(k.get(index).getN1())) {
+				n = k.get(index).getN1();
+				mst.add(n);
+				haug.addAll(k);
+			} else if(!mst.contains(k.get(index).getN2())) {
+				n = k.get(index).getN2();
+				haug.addAll(k);
+			}
+		}
+		return mst;
 	}
 
 	@Override
