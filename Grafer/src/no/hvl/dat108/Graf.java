@@ -111,7 +111,7 @@ public class Graf {
 		kø.add(n);
 		while (!kø.isEmpty()) {
 			n = kø.poll();
-			System.out.println(n.getNodeNavn() + " ");
+			System.out.print(n.getNodeNavn() + ", ");
 			for(Kant k  : n.getKanter()) {
 				int index1 = noder.indexOf(k.getN1());
 				int index2 = noder.indexOf(k.getN2());
@@ -137,23 +137,22 @@ public class Graf {
 	 * 			MST.leggTil(n) 
 	 * 			haug.leggTil(alle kanter mellom n og noder som ikke er med i MST)
 	 */
-	public LinkedList<Node> prim(Node n) {
-		PriorityQueue<Kant> haug = new PriorityQueue<>(); //Oppretter en Haug med kanter
-		LinkedList<Node> mst = new LinkedList<>(); //Oppretter en mst med noder
-		ArrayList<Kant> k = n.getKanter(); //en liste med kantene til node n
-		int index = noder.indexOf(n);
-		haug.addAll(n.getKanter());//Legger til alle kantene fra node n.
-		
-		while (!haug.isEmpty()) { //Så lenge haug ikke er tom:
-			mst.add(haug.poll().getN1()); //tar ut minste kanten i haugen og legger til dens node fra i mst listen.
-			
-			if (!mst.contains(k.get(index).getN1())) {
-				n = k.get(index).getN1();
+	public LinkedList<Node> primMST(Node n) {
+		PriorityQueue<Kant> haug = new PriorityQueue<Kant>();	 //Haugen med kanter
+		LinkedList<Node> mst = new LinkedList<Node>();			//MST av noder
+		//int vekt = 0;
+		haug.addAll(n.getKanter());
+		mst.add(n);
+		while (!haug.isEmpty()) {
+			Kant k = haug.poll();
+			if (!mst.contains(k.getN1())) {
+				n = k.getN1();
 				mst.add(n);
-				haug.addAll(k);
-			} else if(!mst.contains(k.get(index).getN2())) {
-				n = k.get(index).getN2();
-				haug.addAll(k);
+				haug.addAll(n.getKanter());
+			} else if (!mst.contains(k.getN2())) {
+				n = k.getN2();
+				mst.add(n);
+				haug.addAll(n.getKanter());
 			}
 		}
 		return mst;

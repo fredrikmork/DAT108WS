@@ -1,6 +1,6 @@
 package no.hvl.dat108;
 
-public class Kant {
+public class Kant implements Comparable<Kant>{
 	private Node n1;
 	private Node n2;
 	private int vekt;
@@ -47,6 +47,10 @@ public class Kant {
 	@Override
 	public String toString() {
 		return "Kanten " + n1.getNodeNavn() + " & " + n2.getNodeNavn() + ", vekten: " + vekt;
+	}
+	@Override
+	public int compareTo(Kant kant) {
+		return Double.compare(this.getVekt(), kant.getVekt());
 	}
 
 }
