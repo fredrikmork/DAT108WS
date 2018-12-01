@@ -45,8 +45,11 @@ public class Test {
 //		graf.fjernKant(e, d);
 //		System.out.println(graf.toString());
 		// Tester breddeførst i c)
-		System.out.print("Bredde først søk:\t[");
+		System.out.print("Bredde-først søk:\t[");
 		graf.breddeFørst(a);
+		System.out.println("]");
+		System.out.print("Dybde-først søk:\t[");
+		graf.depthFirst(a);
 		System.out.println("]");
 		System.out.println("Prims MST algoritme:\t" + graf.primMST(a));
 	}

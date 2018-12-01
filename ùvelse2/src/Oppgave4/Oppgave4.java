@@ -54,7 +54,7 @@ public class Oppgave4 {
 		ansatte.forEach(System.out::println);
 //		g) Finn og skriv ut den/de ansatte som har lavest lønn.
 		System.out.println("Lavest lønn:");
-		OptionalInt w =ansatte.stream()
+		OptionalInt w = ansatte.stream()
 				.mapToInt(a -> a.getAarslonn())
 				.min();
 		ansatte.stream().filter(a -> a.getAarslonn() == w.getAsInt()).forEach(System.out::println);;

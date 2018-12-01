@@ -1,10 +1,10 @@
 package no.hvl.dat108;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.PriorityQueue;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Graf {
@@ -121,7 +121,7 @@ public class Graf {
 				} else if (!besokt[index2]){
 					besokt[index2] = true;
 					kø.add(k.getN2());
-				} 
+				}
 			}
 		}
 	}
@@ -157,7 +157,89 @@ public class Graf {
 		}
 		return mst;
 	}
+	/**
+	 * dybdeFørst(node)
+			Stabel stabel
+			stabel.stable(node)
+			så lenge stabel.ikkeTom()
+				Node n = stabel.avstable()
+				hvis n ikke er besøkt
+					stabel.stable(alle ubesøktenaboer av n)
+					merk n som besøkt
+					behandle n
+	 */
+	public void depthFirst(Node n) {
+		LinkedList<Node> stabel = new LinkedList<Node>();
+		boolean besokt [] = new boolean[noder.size()];
+		int index = noder.indexOf(n);
+		besokt[index] = true;
+		stabel.add(n);
+		while (!stabel.isEmpty()) {
+			n = stabel.pollLast();
+			System.out.print(n.getNodeNavn() + ", ");
+			for(Kant k  : n.getKanter()) {
+				int index1 = noder.indexOf(k.getN1());
+				int index2 = noder.indexOf(k.getN2());
+				if(!besokt[index1]) {
+					besokt[index1] = true;
+					stabel.add(k.getN1());
+				} else if (!besokt[index2]) {
+					besokt[index2] = true;
+					stabel.add(k.getN2());
+				}
+			}
+		}
+	}
+	
+	public int lengde() {
+		return noder.size();
+	}
+	
+	public boolean erTom() {
+		return noder.size() == 0;
+	}
+	
+	public boolean erNaboer(Node n1, Node n2) {
+		return n1.equals(n2);
+	}
+	
+	public boolean erGrafenSammenhengende() {
+		//TODO
+		return false;
+	}
+	
+	/**
+	 * Dijkstra algoritme
+	 * Dijkstra(v1, v2):
+			for each vertex  v:                            // Initialization
+				v's distance := infinity.
+				v's previous  := none.
+			v1's distance := 0.
+			List := {all vertices}.
 
+			while List is not empty:
+				v := remove List vertex with minimum distance.
+				mark v as visited.
+				for each  unvisited neighbor  n of v:
+					dist := v's distance + edge (v, n)'s weight.
+
+					if dist is smaller than n's distance:
+						n's distance := dist.
+						n's previous  := v.
+
+			reconstruct  path  from v2 back to v1,
+			following  previous pointers.
+	 */
+	public void kortesteSti() {
+		//TODO
+	}
+	public void naboMatrise() {
+		//TODO
+	}
+	public ArrayList<Node> naboListe() {
+		ArrayList<Node> liste = new ArrayList<Node>();
+		return liste;
+	}
 	@Override
 	public String toString() {
 		return "Nodelisten: " + noder.toString() + " Kantlisten: " + kanter.toString();
